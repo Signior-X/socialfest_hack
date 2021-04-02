@@ -18,7 +18,7 @@ WeCare comes as a solution to provide an integrated application with the followi
 
 3. **ToDo list and calendar** - A person has a lot in his mind, this feature will help one to schedule everything properly and efficiently. One could mark the important dates in the calendar and it will give you a prior notification about the same.
 
-	@@ -27,14 +27,15 @@ WeCare comes as a solution to provide an integrated application with the followi
+WeCare comes as a solution to provide an integrated application with the followi
 We have majorly using **flask framework**, **google firebase** , **socket.io** and **javascript** to make our website. For group chats, we would be using flask and use sockets for the messages and for to-do list and calendar, we would be using firebase to store the data and javascript and css for the design part. Rest of the features won’t require a database, thus only javascript would be majorly required.
 
 ### Examples
@@ -30,8 +30,11 @@ We have majorly using **flask framework**, **google firebase** , **socket.io** a
 ![yoga-page](https://user-images.githubusercontent.com/21126219/113406305-e59dd300-93c8-11eb-8753-e1c0bef5e335.png)
 
 ### Team Members 
-Priyam Seth
-Pranshu Kharkwal
+- Priyam Seth
+- Pranshu Kharkwal
 
 ### Link to deployed webapp
 https://wecaresocial.herokuapp.com/
+
+### Link to Github Repo
+https://github.com/Signior-X/socialfest_hack
