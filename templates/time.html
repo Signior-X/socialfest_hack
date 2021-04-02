@@ -1,0 +1,173 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+<title>Time Management</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link href="{{ url_for('static',filename='main.css') }}" rel="stylesheet">
+<link href="{{ url_for('static',filename='timetable.css') }}" rel="stylesheet">
+<style>
+  #log-out-btn {
+    margin-left: auto;
+    margin-right: 8px;
+  }
+</style>
+{% endblock %}
+
+{% block body %}
+
+<!-- Adding scripts for firebase here -->
+<script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-auth.js"></script>
+
+
+<script>
+  var firebaseConfig = {
+    apiKey: "AIzaSyDem2cJ3TdO1czSW4eWzI4fK2Mllju0CGU",
+    authDomain: "wecare-3ff3b.firebaseapp.com",
+    databaseURL: "https://wecare-3ff3b.firebaseio.com",
+    projectId: "wecare-3ff3b",
+    storageBucket: "wecare-3ff3b.appspot.com",
+    messagingSenderId: "603037265503",
+    appId: "1:603037265503:web:0db72780031b5e3278f5ea",
+    measurementId: "G-C05VT0WBFR"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+
+<!-- Checking for user logged in or not -->
+
+{% if userKey %}
+<!-- Logged in -->
+
+<ul class="row nav nav-tabs">
+  <li class="col nav-item">
+    <a href="#longgoals" class="nav-link active" data-toggle="tab">Long Term Goals</a>
+  </li>
+  <li class="col nav-item">
+    <a href="#shortgoals" class="nav-link" data-toggle="tab">Short Term Goals</a>
+  </li>
+  <li class="col nav-item">
+    <a href="#timetable" class="nav-link" data-toggle="tab">Time Table</a>
+  </li>
+
+  <a class="col btn btn-danger" href="/time/logout" id="log-out-btn">Log out</a>
+</ul>
+
+<div class="tab-content" style="padding: 32px 0;">
+
+  <div id="longgoals" class="tab-pane fade show active">
+    <div style="display: flex; margin: 8px 0;">
+      <h3 style="margin: auto; padding-right: 4px;">Hello {{ displayName }} !!</h3>
+    </div>
+    {% include 'longgoals.html' %}
+  </div>
+
+  <div id="shortgoals" class="tab-pane fade show">
+    <div style="display: flex; margin: 8px 0;">
+      <h3 style="margin: auto; padding-right: 4px;">Hello {{ displayName }} !!</h3>
+    </div>
+    {% include 'shortgoals.html' %}
+  </div>
+
+  <div id="timetable" class="tab-pane fade show">
+    <div style="display: flex; margin: 8px 0;">
+      <h3 style="margin: auto; padding-right: 4px;">Hello {{ displayName }} !!</h3>
+    </div>
+    {% include 'timetable.html' %}
+  </div>
+</div>
+
+
+{% else %}
+<!-- Not logged in -->
+
+<div id="login-container" style="display: flex; padding: 32px 0;">
+  <div style="margin: 12px auto;">
+    <div class="card text-center" style="width: 100%; max-width: 600px;">
+      <div class="card-body">
+        <h3 class="card-title">Time Management Login</h3>
+        <p class="card-text">
+          Login using your google account, and we will help in managing your time more effectively, with our goals
+          planner, and time table manager.
+        </p>
+        <button id="sign-in-google" class="btn btn-outline-dark" href="/users/googleauth" role="button"
+          style="text-transform:none">
+          <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+          Login with Google
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  document.getElementById('sign-in-google').onclick = function () {
+    var provider = new firebase.auth.GoogleAuthProvider();
+
+    firebase.auth().signInWithPopup(provider).then(function (result) {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      var token = result.credential.accessToken;
+      // The signed-in user info.
+      var user = result.user;
+      console.log(user);
+      console.log("The sing in google");
+
+      signInToBackend(user.email, user.displayName)
+      // ...
+    }).catch(function (error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+      // ...
+    });
+  }
+
+  function emailToKey(email) {
+    var str = email.toString();
+    return str.replace("@", "__").replace(".", "_")
+  }
+
+  signInToBackend = (userEmail, displayName) => {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log("Great", this.responseText)
+        location.reload()
+      }
+    };
+
+    console.log("Making request");
+
+    var userKey = emailToKey(userEmail);
+    xhttp.open("POST", "/time", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("userKey=" + userKey + "&displayName=" + displayName);
+  }
+
+</script>
+
+
+{% endif %}
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+  integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+{% endblock %}

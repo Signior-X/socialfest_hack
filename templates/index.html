@@ -1,0 +1,250 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+<title>We-Care</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<style>
+    section {
+        padding: 64px 32px 64px 32px;
+    }
+
+    .section-title {
+        padding: 4px;
+        margin-bottom: 32px;
+        font-weight: 500;
+        font-size: 54px;
+        color: #01415c;
+    }
+
+    .intro-imgs {
+        width: 100%;
+    }
+
+    /* #intro .pro-intro {} */
+
+    .pro-intro-head {
+        padding: 12px;
+        text-align: center;
+        font-weight: 800;
+        font-size: 64px;
+        margin: 32px 0;
+    }
+
+    .pro-intro-list {
+        padding: 48px 0;
+    }
+
+    .our-logo {
+        width: 30vh;
+    }
+
+    #pros {
+        background: #f0f0f0;
+    }
+
+    #pros .card {
+        width: 100%;
+        margin: auto;
+        margin: 12px;
+        height: 100%;
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+    }
+
+    .card-img-top {
+        width: 80%;
+        margin: 12px auto;
+    }
+
+    #left-img {
+        margin: auto;
+        width: 60%;
+        border-radius: 50%;
+    }
+
+    #left-heading {
+        padding-top: 48px;
+        color: #37750d !important;
+        font-style: italic;
+        font-weight: 600px;
+    }
+</style>
+
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+{% endblock %}
+
+{% block body %}
+
+<div id="main">
+
+    <section id="intro">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-5" style="text-align: center;" data-aos="zoom-in-up">
+
+                    <img id="left-img" src="/static/img/front_image.jpg"><br>
+                    <h3 id="left-heading" style="color: #404040;">Your Health is our first priority!</h3>
+
+                </div>
+                <div class="col-lg-7 pro-intro">
+                    <div class="pro-intro-head" data-aos="zoom-in-left">
+                        <img class="our-logo" src="/static/img/new-we-care.svg" alt="Card image cap">
+                        We Care
+                    </div>
+                    <div class="row pro-intro-list">
+                        <div class="col">
+                            <img class="intro-imgs" data-aos="zoom-in" src="/static/img/sugg2.png" alt="Card image cap"
+                                style="height:90%;">
+                        </div>
+                        <div class="col">
+                            <img class="intro-imgs" data-aos="zoom-in"
+                                src="/static/img/time-management-removebg-preview.png" alt="Card image cap">
+                        </div>
+                        <div class="col">
+                            <img class="intro-imgs" data-aos="zoom-in" src="/static/img/chat-svgrepo-com.svg"
+                                alt="Card image cap" style="margin-top:10px;height:100px;">
+                        </div>
+                        <div class="col">
+                            <img class="intro-imgs" data-aos="zoom-in" src="/static/img/yoga-svgrepo-com.svg"
+                                alt="Card image cap" style="margin-top:10px;height:100px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pros">
+        <h1 class="text-center section-title" data-aos="fade-up">Our Products</h1>
+
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card" data-aos="fade-up">
+                        <img class="card-img-top" src="/static/img/sugg2.png" alt="Card image cap"
+                            style=" margin-top: 30px;width:250px;height:250px;">
+                        <div class="card-body">
+                            <h5 class="card-title">Content Suggestions</h5>
+                            <p class="card-text">Selected Music, Movies and Books suggestions. Binge, listen to songs
+                                or read books, everything in a single place!</p>
+                            <div style="text-align: center;">
+                                <a href="/suggestions" class="btn btn-info">Browse content</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card" data-aos="fade-up">
+                        <img class="card-img-top" src="/static/img/time-management-removebg-preview.png"
+                            alt="Card image cap" style=" margin-top: 30px;width:250px;height:250px;">
+                        <div class="card-body">
+                            <h5 class="card-title">Time-Table and Future Goals</h5>
+                            <p class="card-text">Schedule your week and create short term and long term goals. Design
+                                your future and chase your dreams!</p>
+                            <div style="text-align: center;">
+                                <a href="/time" class="btn btn-info">Schedule your life</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card" data-aos="fade-up">
+                        <img class="card-img-top" src="/static/img/ne1.png" alt="Card image cap"
+                            style=" margin-top: 30px;width:250px;height:250px;">
+                        <div class=" card-body">
+                            <h5 class="card-title">Group Chat</h5>
+                            <p class="card-text">
+                                Getting bored at Home?
+                                <br> Connect with people and have fun.
+                            </p><br>
+                            <div style="text-align: center;">
+                                <a href="/chat" class="btn btn-info">Lets Chat!</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card" data-aos="fade-in">
+                        <img class="card-img-top" src="/static/img/yoga-svgrepo-com.svg" alt="Card image cap"
+                            style=" margin-top: 30px;width:250px;height:250px;">
+                        <div class="card-body">
+                            <h5 class="card-title">Yoga Tutorials</h5>
+                            <p class="card-text">
+                                Got tired with your daily schedule?
+                                <br> Checkout our daily Yoga tutorials and stay fit and healthy!
+                            </p>
+                            <div style="text-align: center;">
+                                <a href="/yoga" class="btn btn-info">Do Yoga</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <style>
+            #quote {
+                font-style: italic;
+            }
+
+            #writer {
+                text-align: right;
+                margin-right: 60px;
+            }
+        </style>
+        <div class="jumbotron" style="background: white; margin-top: 64px;" data-aos="fade-in">
+            <h2 id="quote" class="text-center" style="margin-top: 32px;">"Be Positive!"</h2>
+            <h3 id="writer"></h3>
+        </div>
+    </section>
+    <script src="/static/messages.js"></script>
+    <script>
+        let messageNumber = Math.floor(Math.random() * 50)
+        let message = messagesData[messageNumber]['message']
+        let writer = messagesData[messageNumber]['writer']
+        document.getElementById("quote").innerHTML = "“" + message + "”"
+        document.getElementById("writer").innerHTML = "- " + writer
+    </script>
+
+</div>
+
+<style>
+    .sticky {
+        position: fixed;
+        top: 0;
+        width: 100%;
+    }
+
+    #top-nav {
+        z-index: 100;
+    }
+
+    .myshadown {
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+    }
+</style>
+<script>
+    window.addEventListener('scroll', function () {
+        console.log(window.pageYOffset)
+        if (window.pageYOffset > 10) {
+            document.getElementById('top-nav').classList.add('sticky');
+            document.getElementById('top-nav').classList.add('myshadown');
+        } else {
+            document.getElementById('top-nav').classList.remove('sticky');
+            document.getElementById('top-nav').classList.remove('myshadown');
+        }
+    });
+</script>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init();
+</script>
+
+{% endblock %}

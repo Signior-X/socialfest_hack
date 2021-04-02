@@ -1,0 +1,158 @@
+<div style="width:70vw; margin:auto; border-radius:20px">
+  <div id="myDIV" class="header">
+    <h2 style="margin:5px">Long Term Goals</h2>
+    <input type="text" id="longInput" placeholder="Set a long term goal">
+    <span onclick="newlongElement()" id="btnId" class="addBtn">Add</span>
+  </div>
+  <ul id="longUL">
+  </ul>
+</div>
+
+
+<script>
+
+  document.addEventListener('DOMContentLoaded', async function () {
+    var db = firebase.firestore();
+    console.log('DB initialised');
+
+    var addElement = db.collection('longGoals').doc('{{ userKey }}');
+    var doc = await addElement.get()
+    if (!doc.exists) {
+      db.collection('longGoals').doc('{{ userKey }}').set({
+        longGoal: [],
+        shortGoal: []
+      });
+    } else {
+      var p = doc.data().longGoal
+
+      for (var ele = 0; ele < p.length; ele++) {
+        var j = p[ele]
+        var li = document.createElement("li");
+        li.classList = "goal-item";
+        document.getElementById("longUL").appendChild(li);
+        var t = document.createTextNode(j);
+        li.appendChild(t);
+
+        var span = document.createElement("SPAN");
+        var txt = document.createTextNode("\u00D7");
+        span.className = "close";
+        span.appendChild(txt);
+        li.appendChild(span);
+
+        for (i = 0; i < close.length; i++) {
+          close[i].onclick = function () {
+            var div = this.parentElement;
+            var toDelete = div.textContent.slice(0, -1)
+            var db = firebase.firestore();
+            console.log('DB initialised');
+            var addElement = db.collection('longGoals').doc('{{ userKey }}');
+            addElement.update({
+              longGoal: firebase.firestore.FieldValue.arrayRemove(toDelete)
+            })
+            div.style.display = "none";
+          }
+        }
+      }
+
+
+    }
+
+  })
+
+  // Create a "close" button and append it to each list item
+  var myNodelist = document.getElementsByClassName("goal-item");
+  var i;
+  for (i = 0; i < myNodelist.length; i++) {
+    var span = document.createElement("SPAN");
+    var txt = document.createTextNode("\u00D7");
+    span.className = "close";
+    span.appendChild(txt);
+    myNodelist[i].appendChild(span);
+  }
+
+  // Click on a close button to hide the current list item
+  var close = document.getElementsByClassName("close");
+  var i;
+  for (i = 0; i < close.length; i++) {
+    close[i].onclick = function () {
+      var div = this.parentElement;
+      div.style.display = "none";
+      var toDelete = myNodelist[i]
+
+      var db = firebase.firestore();
+      console.log('DB initialised');
+      var addElement = db.collection('longGoals').doc('{{ userKey }}');
+      addElement.update({
+        longGoal: firebase.firestore.FieldValue.arrayRemove(toDelete)
+      })
+
+    }
+  }
+
+  // Add a "checked" symbol when clicking on a list item
+  var list = document.querySelector('ul');
+  list.addEventListener('click', function (ev) {
+    if (ev.target.tagName === 'LI') {
+      ev.target.classList.toggle('checked');
+    }
+  }, false);
+
+  // Create a new list item when clicking on the "Add" button
+  async function newlongElement() {
+    var li = document.createElement("li");
+    li.classList = "goal-item";
+    var inputValue = document.getElementById("longInput").value;
+    var t = document.createTextNode(inputValue);
+    li.appendChild(t);
+    if (inputValue === '') {
+      alert("You must write something!");
+    } else {
+      document.getElementById("longUL").appendChild(li);
+
+      var db = firebase.firestore();
+      console.log('DB initialised');
+
+      var addElement = db.collection('longGoals').doc('{{ userKey }}');
+
+
+      var goal = document.getElementById("longInput").value
+      addElement.update({
+        longGoal: firebase.firestore.FieldValue.arrayUnion(goal)
+      })
+    }
+    document.getElementById("longInput").value = "";
+
+    var span = document.createElement("SPAN");
+    var txt = document.createTextNode("\u00D7");
+    span.className = "close";
+    span.appendChild(txt);
+    li.appendChild(span);
+
+    for (i = 0; i < close.length; i++) {
+      close[i].onclick = function () {
+        var div = this.parentElement;
+        var toDelete = div.textContent.slice(0, -1)
+        var db = firebase.firestore();
+        console.log('DB initialised');
+        var addElement = db.collection('longGoals').doc('{{ userKey }}');
+        addElement.update({
+          longGoal: firebase.firestore.FieldValue.arrayRemove(toDelete)
+        })
+        div.style.display = "none";
+      }
+    }
+  }
+
+  $('#longInput').keypress(function (e) {
+    var code = e.keyCode || e.which;
+    if (code == 13) {
+      newlongElement()
+    }
+  });
+
+
+</script>
+
+</body>
+
+</html>
